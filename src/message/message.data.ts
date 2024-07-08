@@ -7,7 +7,7 @@ import {
   ChatMessageModel,
 } from './models/message.model';
 import { ChatMessage, PaginatedChatMessages } from './models/message.entity';
-import { MessageDto, GetMessageDto } from './models/message.dto';
+import { MessageDto, GetMessageDto, Tag } from './models/message.dto';
 import { ObjectID } from 'mongodb';
 import { createRichContent } from './utils/message.helper';
 import { MessageGroupedByConversationOutput } from '../conversation/models/messagesFilterInput';
@@ -19,6 +19,22 @@ export class MessageData {
     protected chatMessageModel: Model<ChatMessageDocument>,
   ) {}
 
+  async updateTags(
+    conversationId: string,
+    tags: Tag[],
+  ): Promise<ChatMessageModel> {
+    const result = await this.chatMessageModel.findOneAndUpdate(
+      { _id: conversationId },
+      { $set: { tags } },
+      { new: true },
+    );
+    if (!result) throw new Error('Could not update tags on conversation');
+    const conversation = chatMessageModel(result);
+
+    // this.conversationCacheManagerService.set(conversation, conversationId);
+    return conversation;
+  }
+
   async create(
     data: MessageDto,
     senderId: ObjectID,
@@ -29,6 +45,7 @@ export class MessageData {
     chatMessage.conversationId = data.conversationId;
     chatMessage.created = new Date();
     chatMessage.deleted = false;
+    chatMessage.tags = data.tags;
 
     createRichContent(data, chatMessage);
 

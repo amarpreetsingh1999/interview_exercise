@@ -6,11 +6,26 @@ import {
   registerEnumType,
 } from '@nestjs/graphql';
 import { ObjectID } from 'mongodb';
+import { ApiProperty } from '@nestjs/swagger';
+
 
 export enum GifType {
   Gif = 'gif',
   Sticker = 'sticker',
 }
+
+export enum TagType {
+  subTopic = 'subTopic',
+}
+
+export class Tag {
+  @ApiProperty({ type: String })
+  id: string;
+
+  @ApiProperty({ enum: TagType })
+  type: TagType;
+}
+
 
 registerEnumType(GifType, {
   name: 'GifType',
