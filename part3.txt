@@ -1,6 +1,6 @@
 Hi, 
 The first two parts of the exercise were completed successfully(or I hope so), but I found myself stuck on part 3 so I'm just going to attempt to explain it to the best of my knowledge here.
 1. The only solution that I could think of was reproducing almost the same code from the conversations into the messages(which I tried doing, but had to revert to avoid the errors), since the logic would presumably be the same.
-2. The problems that I would encounter would most likely arise from the fact the the schema for the conversations and the messages would be different, so the same logic wouldn't work perfectly well(but maybe partially?)
+2. The problems that I would encounter would most likely arise from the fact that the schema for the conversations and the messages would be different, so the same logic wouldn't work perfectly well(but maybe partially?)
 3. Off the top of my head, I'd say just a simple unit testing for each endpoint with different tags(valid tags, invalid tags, unauthorized tags).
 4. I would maybe try to make the tags into its own component to make it more generalized to be applied to both conversations and messages and keep it DRY.
